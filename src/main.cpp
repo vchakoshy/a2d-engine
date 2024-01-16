@@ -1,6 +1,8 @@
 #include "iostream"
+#include "Game.h"
 
 int main(){
-    std::cout << "Game engine started" << std::endl;
+    Game game;
+    game.Run();
     return 0;
 }

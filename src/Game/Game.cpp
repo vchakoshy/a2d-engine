@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Logger.h"
+#include "../Logger/Logger.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <glm/glm.hpp>

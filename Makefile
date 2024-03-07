@@ -5,6 +5,10 @@ SRC_FILES = ./src/*.cpp ./src/Game/*.cpp ./src/Logger/*.cpp
 LINKER_FLAGS = -lSDL2 -lSDL2_image
 OBJ_NAME = gameengine
 
+.PHONY : deps build all run clean
+
+all: clean deps build
+
 deps:
 	sudo apt install libsdl2-dev libsdl2-2.0-0 -y
 

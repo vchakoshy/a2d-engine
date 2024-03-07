@@ -7,7 +7,7 @@ OBJ_NAME = gameengine
 
 .PHONY : deps build all run clean
 
-all: clean deps build
+all: deps build
 
 deps:
 	sudo apt install libsdl2-dev libsdl2-2.0-0 -y

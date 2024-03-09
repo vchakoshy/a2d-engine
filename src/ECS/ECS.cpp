@@ -1,5 +1,6 @@
 #include "ECS.h"
 #include <algorithm>
+#include "../Logger/Logger.h"
 
 int Entity::GetId() const
 {
@@ -28,3 +29,19 @@ const Signature &System::GetComponentSignature() const
 {
     return componentSignature;
 };
+
+Entity Registry::CreateEntity()
+{
+    int entityId;
+    entityId = numEntities++;
+
+    Entity entity(entityId);
+    entitiesToBeAdded.insert(entity);
+
+    Logger::Log("Entity created with id = " + std::to_string(entityId));
+    return entity;
+}
+
+void Registry::Update()
+{
+}

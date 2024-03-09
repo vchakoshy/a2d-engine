@@ -4,6 +4,8 @@
 #include <bitset>
 #include <vector>
 #include <typeindex>
+#include <unordered_map>
+#include <set>
 
 const unsigned int MAX_COMPONENTS = 32;
 
@@ -125,6 +127,8 @@ class Registry
 {
 private:
     int numEntities = 0;
+    std::set<Entity> entitiesToBeAdded;
+    std::set<Entity> entitiesToBeKilled;
 
     std::vector<IPool *> componentPools;
 
@@ -134,6 +138,12 @@ private:
 
 public:
     Registry() = default;
+
+    void Update();
+
+    Entity CreateEntity();
+
+    void AddEntityToSystem(Entity entity);
 };
 
 template <typename TComponent>

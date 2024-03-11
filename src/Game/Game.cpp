@@ -8,6 +8,7 @@
 Game::Game()
 {
     isRunning = false;
+    registry = new Registry();
     Logger::Log("Game constructor called");
 }
 
@@ -60,8 +61,8 @@ glm::vec2 playerVelocity;
 
 void Game::Setup()
 {
-    playerPosition = glm::vec2(10.0, 20.0);
-    playerVelocity = glm::vec2(100.0, 0.0);
+    Entity tank = registry->CreateEntity();
+    Entity truck = registry->CreateEntity();
 }
 
 void Game::Update()
@@ -139,4 +140,5 @@ void Game::Destroy()
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    delete registry;
 }

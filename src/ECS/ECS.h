@@ -2,6 +2,7 @@
 #define ECS_H
 
 #include <bitset>
+#include <memory>
 #include <vector>
 #include <typeindex>
 #include <unordered_map>

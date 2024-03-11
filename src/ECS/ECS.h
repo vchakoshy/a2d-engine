@@ -151,7 +151,16 @@ public:
     template <typename TComponent>
     bool HasComponent(Entity entity) const;
 
-    // void AddEntityToSystem(Entity entity);
+    template <typename TSystem, typename... TArgs>
+    void AddSystem(TArgs &&...args);
+    template <typename TSystem>
+    void RemoveSystem();
+    template <typename TSystem>
+    bool HasSystem() const;
+    template <typename TSystem>
+    TSystem &GetSystem() const;
+
+    void AddEntityToSystems(Entity entity);
 };
 
 template <typename TComponent>
@@ -159,6 +168,33 @@ void System::RequireComponent()
 {
     const auto componentId = Component<TComponent>::GetId();
     componentSignature.set(componentId);
+}
+
+template <typename TSystem, typename... TArgs>
+void Registry::AddSystem(TArgs &&...args)
+{
+    TSystem *newSystem(new TSystem(std::forward<TArgs>(args)...));
+    systems.insert(std::make_pair(std::type_index(typeid(TSystem)), newSystem));
+}
+
+template <typename TSystem>
+void Registry::RemoveSystem()
+{
+    auto system = systems.find(std::type_index(typeid(TSystem)));
+    systems.erase(system);
+};
+
+template <typename TSystem>
+bool Registry::HasSystem() const
+{
+    return systems.find(std::type_index(typeid(TSystem))) != systems.end();
+}
+
+template <typename TSystem>
+TSystem &Registry::GetSystem() const
+{
+    auto system = systems.find(std::type_index(typeid(TSystem)));
+    return *(std::static_pointer_cast<TSystem>(system->second));
 }
 
 template <typename TComponent, typename... TArgs>

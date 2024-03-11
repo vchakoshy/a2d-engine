@@ -146,6 +146,10 @@ public:
 
     template <typename TComponent, typename... TArgs>
     void AddComponent(Entity entity, TArgs &&...args);
+    template <typename TComponent>
+    void RemoveComponent(Entity entity);
+    template <typename TComponent>
+    bool HasComponent(Entity entity) const;
 
     // void AddEntityToSystem(Entity entity);
 };
@@ -185,6 +189,22 @@ void Registry::AddComponent(Entity entity, TArgs &&...args)
     componentPool->Set(entityId, newComponent);
 
     entityComponentSignatures[entityId].set(componentId);
+}
+
+template <typename TComponent>
+void Registry::RemoveComponent(Entity entity)
+{
+    const auto componentId = Component<TComponent>::GetID();
+    const auto entityID = entity.GetId();
+    entityComponentSignatures[entityID].set(componentId, false);
+}
+
+template <typename TComponent>
+bool Registry::HasComponent(Entity entity) const
+{
+    const auto componentId = Component<TComponent>::GetID();
+    const auto entityID = entity.GetId();
+    return entityComponentSignatures[entityID].test(componentId);
 }
 
 #endif

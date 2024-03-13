@@ -9,7 +9,7 @@ class Game
 {
 private:
     bool isRunning;
-    int millisecsPrevousFrame = 0;
+    int milliSecsPreviousFrame = 0;
     SDL_Window *window;
     SDL_Renderer *renderer;
 

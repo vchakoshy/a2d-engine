@@ -130,7 +130,7 @@ public:
 
     T &Get(int index)
     {
-        return static_cast<T>(data[index]);
+        return static_cast<T &>(data[index]);
     }
 
     T &operator[](unsigned int index)
@@ -274,7 +274,7 @@ bool Registry::HasComponent(Entity entity) const
 template <typename TComponent>
 TComponent &Registry::GetComponent(Entity entity) const
 {
-    const auto componentId = Component<TComponent>::GetID();
+    const auto componentId = Component<TComponent>::GetId();
     const auto entityID = entity.GetId();
     auto componentPool = std::static_pointer_cast<Pool<TComponent>>(componentPools[componentId]);
 

@@ -8,7 +8,7 @@
 Game::Game()
 {
     isRunning = false;
-    registry = new Registry();
+    registry = std::make_unique<Registry>();
     Logger::Log("Game constructor called");
 }
 
@@ -140,5 +140,4 @@ void Game::Destroy()
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    delete registry;
 }

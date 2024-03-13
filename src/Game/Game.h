@@ -13,7 +13,7 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
 
-    Registry *registry;
+    std::unique_ptr<Registry> registry;
 
 public:
     Game();

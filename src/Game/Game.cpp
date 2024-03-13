@@ -2,7 +2,9 @@
 #include "../Logger/Logger.h"
 #include "../Components/TransformCompnent.h";
 #include "../Components/RigidBodyComponent.h";
+#include "../Components/SpriteComponent.h";
 #include "../Systems/MovementSystem.h"
+#include "../Systems/RenderSystem.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <glm/glm.hpp>
@@ -65,12 +67,15 @@ glm::vec2 playerVelocity;
 void Game::Setup()
 {
     registry->AddSystem<MovementSystem>();
+    registry->AddSystem<RenderSystem>();
 
     Entity tank = registry->CreateEntity();
 
     tank.AddComponent<TransformComponent>(
         glm::vec2(10.0, 30.0), glm::vec2(1.0, 1.0), 0.0);
     tank.AddComponent<RigidBodyComponent>(glm::vec2(10.0, 50.0));
+
+    tank.AddComponent<SpriteComponent>(10, 10);
 }
 
 void Game::Update()
@@ -95,17 +100,7 @@ void Game::Render()
     SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
     SDL_RenderClear(renderer);
 
-    SDL_Surface *surface = IMG_Load("./assets/images/tank-tiger-right.png");
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_FreeSurface(surface);
-
-    SDL_Rect dstRect = {
-        static_cast<int>(playerPosition.x),
-        static_cast<int>(playerPosition.y),
-        32,
-        32};
-    SDL_RenderCopy(renderer, texture, NULL, &dstRect);
-    SDL_DestroyTexture(texture);
+    registry->GetSystem<RenderSystem>().Update(renderer);
 
     SDL_RenderPresent(renderer);
 }

@@ -22,6 +22,7 @@ protected:
 template <typename TComponent>
 class Component : public IComponent
 {
+public:
     static int GetId()
     {
         static auto id = nextId++;
@@ -234,6 +235,8 @@ void Registry::AddComponent(Entity entity, TArgs &&...args)
     componentPool->Set(entityId, newComponent);
 
     entityComponentSignatures[entityId].set(componentId);
+
+    Logger::Log("Component id = " + std::to_string(componentId) + "was added to entity id " + std::to_string(entityId));
 }
 
 template <typename TComponent>

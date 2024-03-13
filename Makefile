@@ -1,7 +1,7 @@
 CC = g++
 LANG_STD = -std=c++17
 COMPILER_FLAGS = -Wall -Wfatal-errors
-SRC_FILES = ./src/*.cpp ./src/Game/*.cpp ./src/Logger/*.cpp ./src/ECS/*.cpp
+SRC_FILES = ./src/*.cpp ./src/Game/*.cpp ./src/Logger/*.cpp ./src/ECS/*.cpp ./src/AssetStore/*.cpp
 LINKER_FLAGS = -lSDL2 -lSDL2_image
 OBJ_NAME = gameengine
 

@@ -22,6 +22,7 @@ public:
     ~Game();
     void Initialize();
     void Run();
+    void LoadLevel(int level);
     void Setup();
     void ProcessInput();
     void Update();

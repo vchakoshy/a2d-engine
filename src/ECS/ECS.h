@@ -296,7 +296,7 @@ void Entity::RemoveComponent()
 template <typename TComponent>
 bool Entity::HasComponent() const
 {
-    registry->HasComponent<TComponent>(*this);
+    return registry->HasComponent<TComponent>(*this);
 }
 
 template <typename TComponent>

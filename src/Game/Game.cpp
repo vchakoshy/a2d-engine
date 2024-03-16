@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include "../Logger/Logger.h"
-#include "../Components/TransformCompnent.h";
-#include "../Components/RigidBodyComponent.h";
-#include "../Components/AnimationComponent.h";
-#include "../Components/SpriteComponent.h";
+#include "../Components/TransformCompnent.h"
+#include "../Components/RigidBodyComponent.h"
+#include "../Components/AnimationComponent.h"
+#include "../Components/SpriteComponent.h"
 #include "../Systems/MovementSystem.h"
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/RenderSystem.h"

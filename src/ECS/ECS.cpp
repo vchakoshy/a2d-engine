@@ -9,7 +9,8 @@ int Entity::GetId() const
     return id;
 }
 
-void Entity::Kill(){
+void Entity::Kill()
+{
     registry->KillEntity(*this);
 }
 
@@ -46,7 +47,9 @@ Entity Registry::CreateEntity()
         {
             entityComponentSignatures.resize(entityId + 1);
         }
-    }else{
+    }
+    else
+    {
         entityId = freeIds.front();
         freeIds.pop_front();
     }

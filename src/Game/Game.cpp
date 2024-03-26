@@ -19,7 +19,7 @@
 Game::Game()
 {
     isRunning = false;
-    isDebug = false; 
+    isDebug = false;
     registry = std::make_unique<Registry>();
     assetStore = std::make_unique<AssetStore>();
     Logger::Log("Game constructor called");
@@ -139,7 +139,6 @@ void Game::LoadLevel(int level)
     truck.AddComponent<RigidBodyComponent>(glm::vec2(20.0, 0.0));
     truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
     truck.AddComponent<BoxColliderComponent>(32, 32);
-
 }
 
 void Game::Setup()
@@ -172,7 +171,8 @@ void Game::Render()
     SDL_RenderClear(renderer);
 
     registry->GetSystem<RenderSystem>().Update(renderer, assetStore);
-    if(isDebug){
+    if (isDebug)
+    {
         registry->GetSystem<RenderColliderSystem>().Update(renderer);
     }
 
@@ -206,7 +206,7 @@ void Game::ProcessInput()
                 isRunning = false;
             }
 
-            if (sdlEvent.key.keysym.sym == SDLK_d )
+            if (sdlEvent.key.keysym.sym == SDLK_d)
             {
                 isDebug = !isDebug;
             }

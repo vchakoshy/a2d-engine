@@ -7,7 +7,7 @@
 
 struct SpriteComponent
 {
-    std::string assetId; 
+    std::string assetId;
     int width;
     int height;
     int zindex;

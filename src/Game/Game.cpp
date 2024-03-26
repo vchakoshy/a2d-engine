@@ -8,6 +8,8 @@
 #include "../Components/BoxColliderComponent.h"
 #include "../Systems/MovementSystem.h"
 #include "../Systems/AnimationSystem.h"
+#include "../Systems/CollisionSystem.h"
+#include "../Systems/RenderColliderSystem.h"
 #include "../Systems/RenderSystem.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -17,6 +19,7 @@
 Game::Game()
 {
     isRunning = false;
+    isDebug = false; 
     registry = std::make_unique<Registry>();
     assetStore = std::make_unique<AssetStore>();
     Logger::Log("Game constructor called");
@@ -74,6 +77,8 @@ void Game::LoadLevel(int level)
     registry->AddSystem<MovementSystem>();
     registry->AddSystem<RenderSystem>();
     registry->AddSystem<AnimationSystem>();
+    registry->AddSystem<CollisionSystem>();
+    registry->AddSystem<RenderColliderSystem>();
 
     assetStore->AddTexture(renderer, "tank-image", "./assets/images/tank-panther-right.png");
     assetStore->AddTexture(renderer, "truck-image", "./assets/images/truck-ford-right.png");
@@ -126,14 +131,14 @@ void Game::LoadLevel(int level)
         glm::vec2(500.0, 10.0), glm::vec2(1.0, 1.0), 0.0);
     tank.AddComponent<RigidBodyComponent>(glm::vec2(-30.0, 0.0));
     tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 2);
-    tank.AddComponent<BoxColliderComponent>(32,32);
+    tank.AddComponent<BoxColliderComponent>(32, 32);
 
     Entity truck = registry->CreateEntity();
     truck.AddComponent<TransformComponent>(
         glm::vec2(10.0, 10.0), glm::vec2(1.0, 1.0), 0.0);
     truck.AddComponent<RigidBodyComponent>(glm::vec2(20.0, 0.0));
     truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
-    truck.AddComponent<BoxColliderComponent>(32,32);
+    truck.AddComponent<BoxColliderComponent>(32, 32);
 }
 
 void Game::Setup()
@@ -155,6 +160,7 @@ void Game::Update()
 
     registry->GetSystem<MovementSystem>().Update(deltaTime);
     registry->GetSystem<AnimationSystem>().Update();
+    registry->GetSystem<CollisionSystem>().Update();
 
     registry->Update();
 }
@@ -165,6 +171,9 @@ void Game::Render()
     SDL_RenderClear(renderer);
 
     registry->GetSystem<RenderSystem>().Update(renderer, assetStore);
+    if(isDebug){
+        registry->GetSystem<RenderColliderSystem>().Update(renderer);
+    }
 
     SDL_RenderPresent(renderer);
 }
@@ -194,6 +203,11 @@ void Game::ProcessInput()
             if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
             {
                 isRunning = false;
+            }
+
+            if (sdlEvent.key.keysym.sym == SDLK_d )
+            {
+                isDebug = !isDebug;
             }
             break;
 

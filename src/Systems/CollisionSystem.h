@@ -3,6 +3,8 @@
 
 #include "../ECS/ECS.h"
 #include "../Logger/Logger.h"
+#include "../EventBus/EventBus.h"
+#include "../Events/CollisionEvent.h"
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/TransformCompnent.h"
 
@@ -15,7 +17,7 @@ public:
         RequireComponent<BoxColliderComponent>();
     }
 
-    void Update()
+    void Update( std::unique_ptr<EventBus> &eventBus)
     {
         auto entities = GetSystemEntities();
 
@@ -50,6 +52,8 @@ public:
 
                 if (collisionHappened){
                     Logger::Log("collision happened");
+
+                    eventBus->EmitEvent<CollisionEvent>(a,b);
                     
                 }
             }

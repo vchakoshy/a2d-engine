@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL2/SDL.h"
 #include "../ECS/ECS.h"
+#include "../EventBus/EventBus.h"
 #include "../AssetStore/AssetStore.h"
 
 const int FPS = 60;
@@ -17,6 +18,7 @@ private:
 
     std::unique_ptr<Registry> registry;
     std::unique_ptr<AssetStore> assetStore;
+    std::unique_ptr<EventBus> eventBus;
 
 public:
     Game();

@@ -49,7 +49,8 @@ public:
                 );
 
                 if (collisionHappened){
-                    Logger::Log("collision happend");
+                    Logger::Log("collision happened");
+                    
                 }
             }
         }

@@ -2,6 +2,7 @@
 #define ECS_H
 
 #include <bitset>
+#include <deque>
 #include <memory>
 #include <vector>
 #include <typeindex>
@@ -40,6 +41,7 @@ public:
     {
     }
     int GetId() const;
+    void Kill();
 
     Entity &operator=(const Entity &other) = default;
     bool operator==(const Entity &other) const { return id == other.id; };
@@ -146,6 +148,8 @@ private:
     std::set<Entity> entitiesToBeAdded;
     std::set<Entity> entitiesToBeKilled;
 
+    std::deque<int> freeIds;
+
     std::vector<std::shared_ptr<IPool>> componentPools;
 
     std::vector<Signature> entityComponentSignatures;
@@ -165,6 +169,7 @@ public:
     void Update();
 
     Entity CreateEntity();
+    void KillEntity(Entity entity);
 
     template <typename TComponent, typename... TArgs>
     void AddComponent(Entity entity, TArgs &&...args);
@@ -185,6 +190,7 @@ public:
     TSystem &GetSystem() const;
 
     void AddEntityToSystems(Entity entity);
+    void RemoveEntityFromSystem(Entity entity);
 };
 
 template <typename TComponent>

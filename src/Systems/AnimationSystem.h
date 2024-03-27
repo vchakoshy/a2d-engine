@@ -1,5 +1,5 @@
-#ifndef ANIMATIONSYSTEM_H
-#define ANIMATIONSYSTEM_H
+#ifndef ANIMATION_SYSTEM_H
+#define ANIMATION_SYSTEM_H
 
 #include <SDL2/SDL.h>
 #include "../ECS/ECS.h"

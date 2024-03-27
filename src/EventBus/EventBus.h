@@ -1,5 +1,5 @@
-#ifndef EVENTBUS_H
-#define EVENTBUS_H
+#ifndef EVENT_BUS_H
+#define EVENT_BUS_H
 
 #include <map>
 #include <typeindex>

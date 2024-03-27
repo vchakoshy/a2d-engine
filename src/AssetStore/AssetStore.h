@@ -1,5 +1,5 @@
-#ifndef ASSETSTORE_H
-#define ASSETSTORE_H
+#ifndef ASSET_STORE_H
+#define ASSET_STORE_H
 
 #include <map>
 #include <string>

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DAMAGE_SYSTEM_H
+#define DAMAGE_SYSTEM_H
 
 #include "../ECS/ECS.h"
 #include "../Components/BoxColliderComponent.h"
@@ -29,3 +30,5 @@ public:
 
     };
 };
+
+#endif

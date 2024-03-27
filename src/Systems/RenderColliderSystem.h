@@ -1,5 +1,5 @@
-#ifndef RENDERCOLLIDERSYSTEM_H
-#define RENDERCOLLIDERSYSTEM_H
+#ifndef RENDER_COLLIDER_SYSTEM_H
+#define RENDER_COLLIDER_SYSTEM_H
 
 #include "../ECS/ECS.h"
 #include "../Components/TransformCompnent.h"

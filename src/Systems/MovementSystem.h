@@ -1,5 +1,5 @@
-#ifndef MOVEMENTSYSTEM_H
-#define MOVEMENTSYSTEM_H
+#ifndef MOVEMENT_SYSTEM_H
+#define MOVEMENT_SYSTEM_H
 
 #include "../ECS/ECS.h"
 #include "../Components/TransformCompnent.h"

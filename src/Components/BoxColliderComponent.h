@@ -1,5 +1,5 @@
-#ifndef BOXCOLLIDERCOMPONENT_H
-#define BOXCOLLIDERCOMPONENT_H
+#ifndef BOX_COLLIDER_COMPONENT_H
+#define BOX_COLLIDER_COMPONENT_H
 
 #include <glm/glm.hpp>
 

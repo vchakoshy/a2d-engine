@@ -6,12 +6,14 @@
 #include "../Components/AnimationComponent.h"
 #include "../Components/SpriteComponent.h"
 #include "../Components/KeyboardControlledComponent.h"
+#include "../Components/CameraFollowComponent.h"
 #include "../Components/BoxColliderComponent.h"
 #include "../Systems/MovementSystem.h"
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/DamageSystem.h"
 #include "../Systems/CollisionSystem.h"
 #include "../Systems/RenderColliderSystem.h"
+#include "../Systems/CameraMovementSystem.h"
 #include "../Systems/KeyboardControlSystem.h"
 #include "../Systems/RenderSystem.h"
 #include <SDL2/SDL.h>
@@ -70,6 +72,11 @@ void Game::Initialize()
 
     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 
+    camera.x = 0;
+    camera.y = 0;
+    camera.w = windowWidth;
+    camera.h = windowHeight;
+
     isRunning = true;
 }
 
@@ -85,6 +92,7 @@ void Game::LoadLevel(int level)
     registry->AddSystem<RenderColliderSystem>();
     registry->AddSystem<DamageSystem>();
     registry->AddSystem<KeyboardControlSystem>();
+    registry->AddSystem<CameraMovementSystem>();
 
     assetStore->AddTexture(renderer, "tank-image", "./assets/images/tank-panther-right.png");
     assetStore->AddTexture(renderer, "truck-image", "./assets/images/truck-ford-right.png");
@@ -124,15 +132,9 @@ void Game::LoadLevel(int level)
     chopper.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
     chopper.AddComponent<SpriteComponent>("chopper-image", 32, 32, 1);
     chopper.AddComponent<AnimationComponent>(2, 15, true);
-    chopper.AddComponent<KeyboardControlledComponent>(glm::vec2(0, -20), glm::vec2(20, 0), glm::vec2(0, 20), glm::vec2(-20, 0));
+    chopper.AddComponent<KeyboardControlledComponent>(glm::vec2(0, -80), glm::vec2(80, 0), glm::vec2(0, 80), glm::vec2(-80, 0));
+    chopper.AddComponent<CameraFollowComponent>();
 
-    Entity chopperB = registry->CreateEntity();
-    chopperB.AddComponent<TransformComponent>(
-        glm::vec2(70.0, 100.0), glm::vec2(1.0, 1.0), 0.0);
-    chopperB.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
-    chopperB.AddComponent<SpriteComponent>("chopper-image", 32, 32, 1);
-    chopperB.AddComponent<AnimationComponent>(2, 15, true);
-    chopperB.AddComponent<KeyboardControlledComponent>(glm::vec2(0, -50), glm::vec2(50, 0), glm::vec2(0, 50), glm::vec2(-50, 0));
 
     Entity radar = registry->CreateEntity();
     radar.AddComponent<TransformComponent>(
@@ -180,6 +182,7 @@ void Game::Update()
     registry->GetSystem<MovementSystem>().Update(deltaTime);
     registry->GetSystem<AnimationSystem>().Update();
     registry->GetSystem<CollisionSystem>().Update(eventBus);
+    registry->GetSystem<CameraMovementSystem>().Update(camera);
 
     registry->Update();
 }
@@ -189,7 +192,7 @@ void Game::Render()
     SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
     SDL_RenderClear(renderer);
 
-    registry->GetSystem<RenderSystem>().Update(renderer, assetStore);
+    registry->GetSystem<RenderSystem>().Update(renderer, assetStore, camera);
     if (isDebug)
     {
         registry->GetSystem<RenderColliderSystem>().Update(renderer);

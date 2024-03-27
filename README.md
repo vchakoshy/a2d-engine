@@ -1,4 +1,4 @@
-# 2d-game-engine
+# a2d-engine
 
 Experimental 2d game engine
 

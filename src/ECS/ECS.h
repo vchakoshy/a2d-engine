@@ -44,10 +44,10 @@ public:
     void Kill();
 
     Entity &operator=(const Entity &other) = default;
-    bool operator==(const Entity &other) const { return id == other.id; };
-    bool operator!=(const Entity &other) const { return id != other.id; };
-    bool operator<(const Entity &other) const { return id < other.id; };
-    bool operator>(const Entity &other) const { return id > other.id; };
+    bool operator==(const Entity &other) const { return id == other.id; }
+    bool operator!=(const Entity &other) const { return id != other.id; }
+    bool operator>(const Entity &other) const { return id > other.id; }
+    bool operator<(const Entity &other) const { return id < other.id; }
 
     template <typename TComponent, typename... TArgs>
     void AddComponent(TArgs &&...args);

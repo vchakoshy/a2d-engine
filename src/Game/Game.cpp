@@ -6,6 +6,7 @@
 #include "../Components/AnimationComponent.h"
 #include "../Components/SpriteComponent.h"
 #include "../Components/KeyboardControlledComponent.h"
+#include "../Components/HealthComponent.h"
 #include "../Components/CameraFollowComponent.h"
 #include "../Components/ProjectileEmitterComponent.h"
 #include "../Components/BoxColliderComponent.h"
@@ -146,6 +147,7 @@ void Game::LoadLevel(int level)
     chopper.AddComponent<AnimationComponent>(2, 15, true);
     chopper.AddComponent<KeyboardControlledComponent>(glm::vec2(0, -80), glm::vec2(80, 0), glm::vec2(0, 80), glm::vec2(-80, 0));
     chopper.AddComponent<CameraFollowComponent>();
+    chopper.AddComponent<HealthComponent>(100);
 
     Entity radar = registry->CreateEntity();
     radar.AddComponent<TransformComponent>(
@@ -161,6 +163,7 @@ void Game::LoadLevel(int level)
     tank.AddComponent<SpriteComponent>("tank-image", 32, 32, 2);
     tank.AddComponent<BoxColliderComponent>(32, 32);
     tank.AddComponent<ProjectileEmitterComponent>(glm::vec2(100.0,0), 5000, 10000, 0, false);
+    tank.AddComponent<HealthComponent>(100);
 
     Entity truck = registry->CreateEntity();
     truck.AddComponent<TransformComponent>(
@@ -169,6 +172,7 @@ void Game::LoadLevel(int level)
     truck.AddComponent<SpriteComponent>("truck-image", 32, 32, 1);
     truck.AddComponent<BoxColliderComponent>(32, 32);
     truck.AddComponent<ProjectileEmitterComponent>(glm::vec2(0.0,100.0), 2000, 10000, 0, false);
+    truck.AddComponent<HealthComponent>(100);
 
 }
 

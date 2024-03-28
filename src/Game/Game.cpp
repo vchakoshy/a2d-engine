@@ -109,6 +109,7 @@ void Game::LoadLevel(int level)
     double tileScale = 2.0;
     int mapNumCols = 25;
     int mapNumRows = 20;
+
     std::fstream mapFile;
     mapFile.open("./assets/tilemaps/jungle.map");
 
@@ -125,7 +126,7 @@ void Game::LoadLevel(int level)
 
             Entity tile = registry->CreateEntity();
             tile.AddComponent<TransformComponent>(glm::vec2(x * (tileScale * tileSize), y * (tileScale * tileSize)), glm::vec2(tileScale, tileScale), 0.0);
-            tile.AddComponent<SpriteComponent>("tilemap-image", tileSize, tileSize, 0, srcRectX, srcRectY, false);
+            tile.AddComponent<SpriteComponent>("tilemap-image", tileSize, tileSize, 0, false, srcRectX, srcRectY);
         }
     }
 
@@ -201,7 +202,7 @@ void Game::Render()
     registry->GetSystem<RenderSystem>().Update(renderer, assetStore, camera);
     if (isDebug)
     {
-        registry->GetSystem<RenderColliderSystem>().Update(renderer);
+        registry->GetSystem<RenderColliderSystem>().Update(renderer, camera);
     }
 
     SDL_RenderPresent(renderer);

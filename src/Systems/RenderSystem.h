@@ -17,23 +17,24 @@ public:
         RequireComponent<SpriteComponent>();
     }
 
-    void Update(SDL_Renderer *renderer, std::unique_ptr<AssetStore>& assetStore, SDL_Rect &camera)
+    void Update(SDL_Renderer *renderer, std::unique_ptr<AssetStore> &assetStore, SDL_Rect &camera)
     {
-        struct RenderableEntity{
+        struct RenderableEntity
+        {
             TransformComponent transformComponent;
             SpriteComponent spriteComponent;
         };
         std::vector<RenderableEntity> renderableEntities;
-        for (auto entity: GetSystemEntities()){
+        for (auto entity : GetSystemEntities())
+        {
             RenderableEntity renderableEntity;
             renderableEntity.spriteComponent = entity.GetComponent<SpriteComponent>();
             renderableEntity.transformComponent = entity.GetComponent<TransformComponent>();
             renderableEntities.emplace_back(renderableEntity);
         }
 
-        std::sort(renderableEntities.begin(), renderableEntities.end(), [](const RenderableEntity& a, const RenderableEntity &b){
-            return a.spriteComponent.zindex < b.spriteComponent.zindex;
-        });
+        std::sort(renderableEntities.begin(), renderableEntities.end(), [](const RenderableEntity &a, const RenderableEntity &b)
+                  { return a.spriteComponent.zindex < b.spriteComponent.zindex; });
 
         for (auto entity : renderableEntities)
         {
@@ -42,11 +43,10 @@ public:
 
             SDL_Rect srcRect = sprite.srcRect;
             SDL_Rect dstRect = {
-                static_cast<int>(transform.position.x - camera.x),
-                static_cast<int>(transform.position.y - camera.y),
-                static_cast<int>( sprite.width *  transform.scale.x),
-                static_cast<int>( sprite.height* transform.scale.y)
-            };
+                static_cast<int>(transform.position.x - (sprite.isFixed ? 0 : camera.x)),
+                static_cast<int>(transform.position.y - (sprite.isFixed ? 0 : camera.y)),
+                static_cast<int>(sprite.width * transform.scale.x),
+                static_cast<int>(sprite.height * transform.scale.y)};
 
             SDL_RenderCopyEx(
                 renderer,
@@ -55,10 +55,7 @@ public:
                 &dstRect,
                 transform.rotation,
                 NULL,
-                SDL_FLIP_NONE
-                );
-
-
+                SDL_FLIP_NONE);
         }
     }
 };

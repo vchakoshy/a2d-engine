@@ -22,8 +22,8 @@ public:
     void onCollision(CollisionEvent &event)
     {
         Logger::Log("the damage system received collision");
-        event.a.Kill();
-        event.b.Kill();
+        // event.a.Kill();
+        // event.b.Kill();
     }
 
     void Update(){

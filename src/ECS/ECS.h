@@ -272,7 +272,7 @@ void Registry::RemoveComponent(Entity entity)
 template <typename TComponent>
 bool Registry::HasComponent(Entity entity) const
 {
-    const auto componentId = Component<TComponent>::GetID();
+    const auto componentId = Component<TComponent>::GetId();
     const auto entityID = entity.GetId();
     return entityComponentSignatures[entityID].test(componentId);
 }

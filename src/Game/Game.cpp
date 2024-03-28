@@ -21,6 +21,11 @@
 #include <glm/glm.hpp>
 #include "Game.h"
 
+int Game::windowWidth;
+int Game::windowHeight;
+int Game::mapWidth;
+int Game::mapHeight;
+
 Game::Game()
 {
     isRunning = false;
@@ -125,6 +130,8 @@ void Game::LoadLevel(int level)
     }
 
     mapFile.close();
+    mapWidth = mapNumCols * tileSize * tileScale;
+    mapHeight = mapNumRows * tileSize * tileScale;
 
     Entity chopper = registry->CreateEntity();
     chopper.AddComponent<TransformComponent>(
@@ -134,7 +141,6 @@ void Game::LoadLevel(int level)
     chopper.AddComponent<AnimationComponent>(2, 15, true);
     chopper.AddComponent<KeyboardControlledComponent>(glm::vec2(0, -80), glm::vec2(80, 0), glm::vec2(0, 80), glm::vec2(-80, 0));
     chopper.AddComponent<CameraFollowComponent>();
-
 
     Entity radar = registry->CreateEntity();
     radar.AddComponent<TransformComponent>(
@@ -234,8 +240,6 @@ void Game::ProcessInput()
             }
             eventBus->EmitEvent<KeyPressEvent>(sdlEvent.key.keysym.sym);
             break;
-
-        
         }
     }
 }

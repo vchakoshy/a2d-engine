@@ -156,6 +156,12 @@ private:
 
     std::unordered_map<std::type_index, std::shared_ptr<System>> systems;
 
+    std::unordered_map<std::string, Entity> entityPerTag;
+    std::unordered_map<int, std::string> tagPerEntity;
+
+    std::unordered_map<std::string, std::set<Entity>> entitiesPerTag;
+    std::unordered_map<int, std::string> groupPerEntity;
+
 public:
     Registry()
     {

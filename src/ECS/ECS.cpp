@@ -154,24 +154,31 @@ void Registry::GroupEntity(Entity entity, const std::string &group)
 
 bool Registry::EntityBelongsToGroup(Entity entity, const std::string &group) const
 {
+    if (entitiesPerGroup.find(group) == entitiesPerGroup.end())
+    {
+        return false;
+    }
     auto groupEntities = entitiesPerGroup.at(group);
     return groupEntities.find(entity.GetId()) != groupEntities.end();
 }
 
 std::vector<Entity> Registry::GetEntitiesByGroup(const std::string &group) const
 {
-    auto& setOfEntities = entitiesPerGroup.at(group);
+    auto &setOfEntities = entitiesPerGroup.at(group);
     return std::vector<Entity>(setOfEntities.begin(), setOfEntities.end());
 }
 
 void Registry::RemoveEntityGroup(Entity entity)
 {
     auto groupedEntity = groupPerEntity.find(entity.GetId());
-    if (groupedEntity != groupPerEntity.end()) {
+    if (groupedEntity != groupPerEntity.end())
+    {
         auto group = entitiesPerGroup.find(groupedEntity->second);
-        if (group != entitiesPerGroup.end()) {
+        if (group != entitiesPerGroup.end())
+        {
             auto entityInGroup = group->second.find(entity);
-            if (entityInGroup != group->second.end()) {
+            if (entityInGroup != group->second.end())
+            {
                 group->second.erase(entityInGroup);
             }
         }

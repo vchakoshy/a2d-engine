@@ -17,7 +17,7 @@ public:
         RequireComponent<BoxColliderComponent>();
     }
 
-    void Update( std::unique_ptr<EventBus> &eventBus)
+    void Update(std::unique_ptr<EventBus> &eventBus)
     {
         auto entities = GetSystemEntities();
 
@@ -40,21 +40,20 @@ public:
                 auto bCollider = b.GetComponent<BoxColliderComponent>();
 
                 bool collisionHappened = CheckAABBCollision(
-                    aTransform.position.x + aCollider.offset.x, 
+                    aTransform.position.x + aCollider.offset.x,
                     aTransform.position.y + aCollider.offset.y,
-                    aCollider.width, 
+                    aCollider.width,
                     aCollider.height,
-                    bTransform.position.x + bCollider.offset.x, 
+                    bTransform.position.x + bCollider.offset.x,
                     bTransform.position.y + bCollider.offset.y,
-                    bCollider.width, 
-                    bCollider.height
-                );
+                    bCollider.width,
+                    bCollider.height);
 
-                if (collisionHappened){
+                if (collisionHappened)
+                {
                     Logger::Log("collision happened");
 
-                    eventBus->EmitEvent<CollisionEvent>(a,b);
-                    
+                    eventBus->EmitEvent<CollisionEvent>(a, b);
                 }
             }
         }
@@ -66,8 +65,7 @@ public:
             aX < bX + bW &&
             aX + aW > bX &&
             aY < bY + bH &&
-            aY + aH > bY
-        );
+            aY + aH > bY);
     }
 };
 

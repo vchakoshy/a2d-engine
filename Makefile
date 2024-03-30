@@ -16,7 +16,7 @@ OBJ_NAME = gameengine
 all: deps build
 
 deps:
-	sudo apt update 
+	# sudo apt update 
 	sudo apt install libsdl2-dev libsdl2-2.0-0 libjpeg-dev libwebp-dev libtiff5-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-image-2.0-0 libglm-dev libsdl2-mixer-dev liblua5.3-dev -y 
 
 build:

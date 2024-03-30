@@ -17,9 +17,7 @@ all: deps build
 
 deps:
 	sudo apt update 
-	sudo apt install libsdl2-dev libsdl2-2.0-0 -y
-	sudo apt install libjpeg-dev libwebp-dev libtiff5-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-image-2.0-0 -y
-	sudo apt install libglm-dev
+	sudo apt install libsdl2-dev libsdl2-2.0-0 libjpeg-dev libwebp-dev libtiff5-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-image-2.0-0 libglm-dev libsdl2-mixer-dev liblua5.3-dev -y 
 
 build:
 	$(CC) $(COMPILER_FLAGS) $(LANG_STD) $(INCLUDE_PATH) $(SRC_FILES) $(LINKER_FLAGS) -o $(OBJ_NAME)

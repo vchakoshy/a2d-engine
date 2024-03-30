@@ -25,6 +25,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <glm/glm.hpp>
+#include <imgui/imgui.h>
+#include <imgui/imgui_sdl.h>
+#include <imgui/imgui_impl_sdl.h>
 #include "Game.h"
 #include "../Systems/ProjectileEmitSystem.h"
 
@@ -87,6 +90,10 @@ void Game::Initialize()
         Logger::Err("Error creating SDL renderer");
         return;
     }
+
+    // Initialize imgui
+    ImGui::CreateContext();
+    ImGuiSDL::Initialize(renderer, windowWidth, windowHeight);
 
     SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 
@@ -245,6 +252,11 @@ void Game::Render()
     if (isDebug)
     {
         registry->GetSystem<RenderColliderSystem>().Update(renderer, camera);
+
+        ImGui::NewFrame();
+        ImGui::ShowDemoWindow();
+        ImGui::Render();
+        ImGuiSDL::Render(ImGui::GetDrawData());
     }
 
     SDL_RenderPresent(renderer);
@@ -266,6 +278,16 @@ void Game::ProcessInput()
     SDL_Event sdlEvent;
     while (SDL_PollEvent(&sdlEvent))
     {
+        ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
+        ImGuiIO &io = ImGui::GetIO();
+
+        int mouseX, mouseY;
+        const int buttons = SDL_GetMouseState(&mouseX, &mouseY);
+
+        io.MousePos = ImVec2( mouseX, mouseY);
+        io.MouseDown[0] = buttons & SDL_BUTTON(SDL_BUTTON_LEFT); 
+        io.MouseDown[1] = buttons & SDL_BUTTON(SDL_BUTTON_RIGHT); 
+
         switch (sdlEvent.type)
         {
         case SDL_QUIT:
@@ -289,6 +311,8 @@ void Game::ProcessInput()
 
 void Game::Destroy()
 {
+    ImGui::DestroyContext();
+    ImGuiSDL::Deinitialize();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

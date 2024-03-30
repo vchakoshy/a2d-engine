@@ -21,6 +21,7 @@
 #include "../Systems/ProjectileLifecycleSystem.h"
 #include "../Systems/RenderSystem.h"
 #include "../Systems/RenderTextSystem.h"
+#include "../Systems/RenderGUISystem.h"
 #include "../Systems/RenderHealthBarSystem.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -122,6 +123,7 @@ void Game::LoadLevel(int level)
     registry->AddSystem<ProjectileLifecycleSystem>();
     registry->AddSystem<RenderTextSystem>();
     registry->AddSystem<RenderHealthBarSystem>();
+    registry->AddSystem<RenderGUISystem>();
 
     assetStore->AddTexture(renderer, "tank-image", "./assets/images/tank-panther-right.png");
     assetStore->AddTexture(renderer, "truck-image", "./assets/images/truck-ford-right.png");
@@ -253,10 +255,7 @@ void Game::Render()
     {
         registry->GetSystem<RenderColliderSystem>().Update(renderer, camera);
 
-        ImGui::NewFrame();
-        ImGui::ShowDemoWindow();
-        ImGui::Render();
-        ImGuiSDL::Render(ImGui::GetDrawData());
+        registry->GetSystem<RenderGUISystem>().Update(registry, camera);
     }
 
     SDL_RenderPresent(renderer);
@@ -284,9 +283,9 @@ void Game::ProcessInput()
         int mouseX, mouseY;
         const int buttons = SDL_GetMouseState(&mouseX, &mouseY);
 
-        io.MousePos = ImVec2( mouseX, mouseY);
-        io.MouseDown[0] = buttons & SDL_BUTTON(SDL_BUTTON_LEFT); 
-        io.MouseDown[1] = buttons & SDL_BUTTON(SDL_BUTTON_RIGHT); 
+        io.MousePos = ImVec2(mouseX, mouseY);
+        io.MouseDown[0] = buttons & SDL_BUTTON(SDL_BUTTON_LEFT);
+        io.MouseDown[1] = buttons & SDL_BUTTON(SDL_BUTTON_RIGHT);
 
         switch (sdlEvent.type)
         {

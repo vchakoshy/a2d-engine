@@ -2,6 +2,7 @@
 #define RENDER_GUI_SYSTEM_H
 
 #include "../ECS/ECS.h"
+#include "../Game/Game.h"
 #include "../Components/TransformCompnent.h"
 #include "../Components/RigidBodyComponent.h"
 #include "../Components/SpriteComponent.h"

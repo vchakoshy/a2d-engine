@@ -7,6 +7,7 @@
 #include "../Game/Game.h"
 #include "../Components/TransformCompnent.h"
 #include "../Components/RigidBodyComponent.h"
+#include "../Components/SpriteComponent.h"
 
 class MovementSystem : public System
 {
